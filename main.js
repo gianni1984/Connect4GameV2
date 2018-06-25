@@ -1,5 +1,8 @@
 $(document).ready(function () {
     const connect4 = new Connect('#connect4');
+    $('#restart').on('click', function () {
+        connect4.restart();
+    })
 })
 
 class Connect {
@@ -14,7 +17,8 @@ class Connect {
     }
     createBoard() { // creating a 6 X 7 grid
         const $board = $(this.selector); // grabbing in variable $board the #connect4 html element
-        $board.empty();
+        $board.empty();//removing the last board when creating a new one
+        this.player = 'red';
         //creating the $board html dinamically
         for (let row = 0; row < this.ROWS; row++) {
             const $row = $('<div>'); // create a div element and assign it to the $row variable
@@ -62,19 +66,23 @@ class Connect {
         $board.on('click', '.col.empty', function () {
             const col = $(this).data('col') //grab the index of the col (0,1,2,3,4,5,6,7)
             const $lastEmptyCell = getLastEmptyCell(col); //find last empty cell on the column we hover on
+
             $lastEmptyCell.removeClass(`empty next-${that.player}`);
             $lastEmptyCell.addClass(that.player);
-
+            $lastEmptyCell.data('player', that.player);
+            
             that.player = that.player === 'red' ? 'black' : 'red'; // switch beetween players (red and black);
             $('#player').text(that.player);
             $(this).trigger('mouseenter'); //trigger the mouseenter event
 
         })
     }
-    restart() {
+
+    checkForWinner() {
         const that = this;
-        $('#restart').on('click', function() {
-            that.createBoard();
-        })
+    }
+    restart() {
+        this.createBoard();
+        $('#player').text(this.player);
     }
 }
