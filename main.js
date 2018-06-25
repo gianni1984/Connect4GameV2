@@ -1,7 +1,5 @@
 $(document).ready(function () {
     const connect4 = new Connect('#connect4');
-    connect4.createBoard();
-    connect4.addEventListeners();
 })
 
 class Connect {
@@ -10,10 +8,13 @@ class Connect {
         this.ROWS = 6;
         this.COLS = 7;
         this.player = 'red';
-        // this.createGrid();
+        this.createBoard();
+        this.addEventListeners();
+        this.restart();
     }
     createBoard() { // creating a 6 X 7 grid
         const $board = $(this.selector); // grabbing in variable $board the #connect4 html element
+        $board.empty();
         //creating the $board html dinamically
         for (let row = 0; row < this.ROWS; row++) {
             const $row = $('<div>'); // create a div element and assign it to the $row variable
@@ -65,8 +66,15 @@ class Connect {
             $lastEmptyCell.addClass(that.player);
 
             that.player = that.player === 'red' ? 'black' : 'red'; // switch beetween players (red and black);
+            $('#player').text(that.player);
             $(this).trigger('mouseenter'); //trigger the mouseenter event
 
+        })
+    }
+    restart() {
+        const that = this;
+        $('#restart').on('click', function() {
+            that.createBoard();
         })
     }
 }
