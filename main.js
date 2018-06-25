@@ -29,7 +29,7 @@ class Connect {
         }
     }
     addEventListeners() {
-        const $board = $(this.selector);
+        const $board = $(this.selector); // grabbing in variable $board the #connect4 html element
         const that = this; // keeping track of the original this
         function getLastEmptyCell(col) { //getting the last empty cell from the specified column
             const cells = $(`.col[data-col='${col}']`); //getting the cells from the specified column
@@ -45,15 +45,28 @@ class Connect {
         //adding on mouse enter event listener
         $board.on('mouseenter', '.col.empty', function () {
             const col = $(this).data('col'); //grab the index of the col (0,1,2,3,4,5,6,7)
-            const $lastemptyCell = getLastEmptyCell(col); //find last empty cell on the column we hover on
-            $lastemptyCell.addClass(`next-${that.player}`);
+            const $lastEmptyCell = getLastEmptyCell(col); //find last empty cell on the column we hover on
+            $lastEmptyCell.addClass(`next-${that.player}`);
         })
 
         //adding on mouse leave event listener
         $board.on('mouseleave', '.col.empty', function () {
             const col = $(this).data('col') //grab the index of the col (0,1,2,3,4,5,6,7)
-            const $lastemptyCell = getLastEmptyCell(col); //find last empty cell on the column we hover on
-            $lastemptyCell.removeClass(`next-${that.player}`);
+            const $lastEmptyCell = getLastEmptyCell(col); //find last empty cell on the column we hover on
+            $lastEmptyCell.removeClass(`next-${that.player}`);
+        })
+
+        //adding the click event
+
+        $board.on('click', '.col.empty', function () {
+            const col = $(this).data('col') //grab the index of the col (0,1,2,3,4,5,6,7)
+            const $lastEmptyCell = getLastEmptyCell(col); //find last empty cell on the column we hover on
+            $lastEmptyCell.removeClass(`empty next-${that.player}`);
+            $lastEmptyCell.addClass(that.player);
+
+            that.player = that.player === 'red' ? 'black' : 'red'; // switch beetween players (red and black);
+            $(this).trigger('mouseenter'); //trigger the mouseenter event
+
         })
     }
 }

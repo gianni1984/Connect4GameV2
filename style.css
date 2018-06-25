@@ -18,6 +18,7 @@ body {
     height: 70px;
     border-radius: 100%;
     margin: 5px;
+    background: white;
 }
 
 .col.empty {
@@ -25,5 +26,17 @@ body {
 }
 
 .col.next-red {
-    background-color: rgb(255, 0, 0, 0.5)d;
+    background-color: rgb(255, 0, 0, 0.5);
+}
+
+.col.next-black {
+    background-color: rgb(0, 0, 0, 0.5);
+}
+
+.red {
+    background-color: rgb(255, 0, 0);
+}
+
+.black {
+    background-color: rgb(0, 0, 0);
 }
